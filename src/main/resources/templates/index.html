@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head><title>Welcome</title></head>
+<body>
+    <div th:replace="shared/header :: header"></div>
+
+    <h2>Welcome to the Job Portal</h2>
+    <p th:if="${#authentication.name != 'anonymousUser'}">Logged in as <b th:text="${#authentication.name}"></b></p>
+
+    <div th:replace="shared/footer :: footer"></div>
+</body>
+</html>

@@ -1,0 +1,40 @@
+create database jobportal;
+use jobportal;
+
+-- USERS table
+CREATE TABLE users (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(50) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL,
+    role ENUM('EMPLOYER', 'APPLICANT') NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+-- JOBS table
+CREATE TABLE jobs (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(100) NOT NULL,
+    description TEXT NOT NULL,
+    employer_id BIGINT NOT NULL,
+    status VARCHAR(20) DEFAULT 'OPEN', -- e.g., OPEN, CLOSED
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (employer_id) REFERENCES users(id)
+        ON DELETE CASCADE
+);
+
+-- APPLICATIONS table
+CREATE TABLE applications (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    user_id BIGINT NOT NULL,
+    job_id BIGINT NOT NULL,
+    status VARCHAR(20) DEFAULT 'APPLIED', -- e.g., APPLIED, REVIEWED, REJECTED, ACCEPTED
+    applied_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id)
+        ON DELETE CASCADE,
+    FOREIGN KEY (job_id) REFERENCES jobs(id)
+        ON DELETE CASCADE,
+    UNIQUE KEY unique_application (user_id, job_id) -- user applies once to a job
+);

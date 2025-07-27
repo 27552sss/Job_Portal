@@ -1,0 +1,27 @@
+<!-- Replace previous JS role toggle with Thymeleaf conditional rendering -->
+
+<!-- Applicant Section -->
+<div th:if="${role == 'ROLE_APPLICANT'}">
+    <h3>Applicant Dashboard</h3>
+    <p>Browse and apply to available jobs:</p>
+    <ul class="list-group mb-3">
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+            Frontend Developer @ TechCorp
+            <button class="btn btn-sm btn-success">Apply</button>
+        </li>
+    </ul>
+    <button class="btn btn-outline-info">My Applications</button>
+</div>
+
+<!-- Employer Section -->
+<div th:if="${role == 'ROLE_EMPLOYER'}">
+    <h3>Employer Dashboard</h3>
+    <p>Post and manage your job listings:</p>
+    <button class="btn btn-primary mb-3">Post New Job</button>
+    <ul class="list-group">
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+            Java Developer - 12 Applications
+            <button class="btn btn-sm btn-outline-secondary">View Applicants</button>
+        </li>
+    </ul>
+</div>
